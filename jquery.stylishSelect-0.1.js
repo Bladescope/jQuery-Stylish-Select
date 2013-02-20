@@ -165,10 +165,7 @@
             },
             hideContainer: function (container) {
                 container.fadeOut(properties.speed);
-            }
-		
-        },
-        methods = {
+            },
             init : function (options) {
 			
                 // Maintain the chainability of the plugin
@@ -221,6 +218,9 @@
 					$(window).bind('scroll.stylishSelect', methods.toggleVisibility).bind('resize.stylishSelect', methods.toggleVisibility);
                 });
             },
+		
+        },
+        methods = {
             destroy: function () {
                 // Destroys all event bindings
                 return this.each(function () {
@@ -239,9 +239,9 @@
        	if(!methodType || methodType === 'object') {
        		
        		// Standard usage. Initiate if an object or nothing is passed.
-       		return methods.init.apply(this, arguments);
+       		return privateMethods.init.apply(this, arguments);
        		
-       	} else if(methodType === 'string') {
+       	} else if (methodType === 'string') {
        		
        		if (typeof methods[method] === 'function') {
        		
