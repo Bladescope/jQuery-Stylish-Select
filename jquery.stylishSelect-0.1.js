@@ -230,17 +230,36 @@
             }
         };
 	
+	// Attach the plugin to jQuery.
     $.fn.stylishSelect = function (method) {
+    	
+    	var methodType = typeof method;
+    	
         // Method calling logic
-        if (methods[method]) {
-			// If the method exists, use it
-			return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
-		} else if (typeof method === 'object' || !method) {
-			// If not, assume it's being passed into the init function
-			return methods.init.apply(this, arguments);
+       	if(!methodType || methodType === 'object') {
+       		
+       		// Standard usage. Initiate if an object or nothing is passed.
+       		return methods.init.apply(this, arguments);
+       		
+       	} else if(methodType === 'string') {
+       		
+       		if (typeof methods[method] === 'function') {
+       		
+				// Advanced usage. Only really used if the user wants to destroy the stylishSelect. ):
+				return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
+				
+			} else {
+				
+				// If not, tell them off. Make them feel bad.
+				$.error('Method ' + method + ' does not exist on jQuery.stylishSelect');
+				
+			}
+			
 		} else {
-			// If not, tell them off. Make them feel bad.
-			$.error('Method ' + method + ' does not exist on jQuery.stylishSelect');
+			
+			// What did they even pass?
+			$.error('Invalid argument passed to jQuery.stylishSelect. Expected nothing, a string, or an object, was passed a(n) ' + methodType);
+			
 		}
 	};
 
